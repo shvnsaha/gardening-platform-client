@@ -1,5 +1,6 @@
 "use client"
 
+import { useUser } from "@/context/user.provider";
 import Link from "next/link";
 
 
@@ -16,8 +17,9 @@ import Link from "next/link";
 const Navbar = () => {
 
    
-
+const {user,isLoading} = useUser()
    
+
 
     const navItems = <>
         <li className='font-bold'><Link href={'/'}>Home</Link></li>
@@ -43,7 +45,7 @@ const Navbar = () => {
 
                     <Link href={'/'} className='hidden md:block'>
                         {/* <img src={logo} className='h-10 rounded-full' /> */}
-                        Logo
+                        {user?.role}
                     </Link>
 
                     

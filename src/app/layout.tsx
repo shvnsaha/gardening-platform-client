@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Providers } from "@/providers/Provider";
+
 
 
 export const metadata: Metadata = {
@@ -17,7 +19,9 @@ export default function RootLayout({
       <body
        data-theme="cupcake"
       >
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
