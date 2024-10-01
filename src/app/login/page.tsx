@@ -1,6 +1,7 @@
 "use client"
 
 
+import { loginUser } from "@/services/AuthServices";
 import { TbFidgetSpinner } from "react-icons/tb";
 
 
@@ -20,7 +21,20 @@ const Login = () => {
             password
         }
 
-       console.log(userInfo);
+        try {
+            const response:any =  await loginUser(userInfo)
+            console.log(response);
+            // if (response?.data?.success === true) {
+            //     toast.success(response?.data?.message);
+            //     router.push("/login");
+            //   } else {
+            //     toast.error(
+            //       response?.data?.message || "Signup failed. Please try again."
+            //     );
+            //   }
+           } catch (error) {
+            console.log(error);
+           }
     }
     return (
         <>
