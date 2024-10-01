@@ -16,7 +16,6 @@ export default function RootLayout({
     <html lang="en">
       <body
        data-theme="cupcake"
-       className="h-screen"
       >
         {children}
       </body>
