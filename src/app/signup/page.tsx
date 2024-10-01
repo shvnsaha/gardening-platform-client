@@ -1,9 +1,14 @@
 "use client"
+import nexiosInstance from "@/config/nexios.config";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import toast from "react-hot-toast";
 
 
 
 const Signup = () => {
+    const router = useRouter();
 
 //     const [signup] = useSignupMutation()
 //     const navigate = useNavigate();
@@ -26,7 +31,19 @@ const handleSignUp = async(e:any) =>{
         name,email,phone,password,role: "user"
     }
 
-    console.log(userData);
+   try {
+    const response:any = await nexiosInstance.post("/auth/signup", userData);
+    if (response?.data?.success === true) {
+        toast.success(response?.data?.message);
+        router.push("/login");
+      } else {
+        toast.error(
+          response?.data?.message || "Signup failed. Please try again."
+        );
+      }
+   } catch (error) {
+    console.log(error);
+   }
 }
 
     return (
