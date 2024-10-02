@@ -15,6 +15,7 @@ const UserProfilePage = ({ params }) => {
 
     const { data: userData } = useGetSingleUserQuery(params.id)
     const { data: userPost } = useGetUserPostsQuery(params.id)
+    console.log(userPost);
     const user = userData?.data;
 
    
@@ -58,9 +59,9 @@ const UserProfilePage = ({ params }) => {
             {/* Posts Section */}
             <div className="bg-white shadow-lg mx-auto rounded-lg p-6 max-w-5xl">
                 <h2 className="text-2xl font-bold mb-4">Posts</h2>
-                {userPost?.data.map(post => (
+                {userPost?.data.map((post:any) => (
                     <div key={post.id} className="mb-4 border-b pb-4">
-                        <PostCard />
+                        <PostCard post={post} />
                     </div>
                 ))}
             </div>

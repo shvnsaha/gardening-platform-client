@@ -6,7 +6,7 @@ const nexiosInstance = new Nexios({
     "Content-Type": "application/json",
   },
   credentials: "include",
-  timeout: 10000,
+ 
 });
 
 export default nexiosInstance;

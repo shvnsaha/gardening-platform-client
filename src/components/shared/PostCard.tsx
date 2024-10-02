@@ -5,17 +5,8 @@ import { BiDownvote, BiUpvote } from "react-icons/bi";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 
-const PostCard = () => {
-    const post = {
-
-        id: 1,
-        title: 'Just planted some new herbs! 🌿',
-        content: 'Can\'t wait to see them grow!',
-        image: 'https://via.placeholder.com/300',
-        votes: 42,
-        comments: 5,
-    }
-
+const PostCard = ({post}) => {
+  
     return (
         <div>
             <div className="flex items-center gap-3">
