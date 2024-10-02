@@ -1,40 +1,45 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 
 import { loginUser } from "@/services/AuthServices";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
 
 
 
 const Login = () => {
 
-   
-
-
-    const handleSubmit =  async(event:any) =>{
+    const router = useRouter()
+    const [loader, setLoader] = useState(false)
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        const userInfo ={
+        const userInfo = {
             email,
             password
         }
 
         try {
-            const response:any =  await loginUser(userInfo)
+            setLoader(true)
+            const response: any = await loginUser(userInfo)
             console.log(response);
-            // if (response?.data?.success === true) {
-            //     toast.success(response?.data?.message);
-            //     router.push("/login");
-            //   } else {
-            //     toast.error(
-            //       response?.data?.message || "Signup failed. Please try again."
-            //     );
-            //   }
-           } catch (error) {
+            if (response?.success === true) {
+                toast.success(response?.data?.message);
+                router.push("/");
+            } else {
+                toast.error(
+                    response?.data?.message || "Signup failed. Please try again."
+                );
+            }
+        } catch (error) {
             console.log(error);
-           }
+        }
     }
     return (
         <>
@@ -47,7 +52,7 @@ const Login = () => {
                         </p>
                     </div>
                     <form
-                    onSubmit={handleSubmit}
+                        onSubmit={handleSubmit}
                         action=""
                         className="space-y-6 ng-untouched ng-pristine ng-valid"
                     >
@@ -89,25 +94,25 @@ const Login = () => {
                                 type="submit"
                                 className="bg-blue-500 w-full rounded-md py-3 text-white"
                             >
-                                {/* {loader ? (
+                                {loader ? (
                                     <TbFidgetSpinner className="animate-spin m-auto" />
                                 ) : (
                                     "Continue"
-                                )} */}
-                             Continue
+                                )}
+
                             </button>
                         </div>
                     </form>
-                 
-                    
+
+
                     <p className="px-6 text-sm text-center text-gray-400">
                         Don&apos;t have an account yet?{" "}
-                        {/* <Link
-                            to="/signup"
+                        <Link
+                            href="/signup"
                             className="hover:underline hover:text-rose-500 text-gray-600"
                         >
                             Sign up
-                        </Link> */}
+                        </Link>
                         .
                     </p>
                 </div>

@@ -142,7 +142,6 @@ const Signup = () => {
                                 ) : (
                                     "Continue"
                                 )}
-                                continue
                             </button>
                         </div>
                     </form>
