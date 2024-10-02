@@ -18,6 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body
        data-theme="cupcake"
+       className="max-w-[2520px] px-1 mx-auto bg-gray-100"
       >
         <Providers>
           {children}

@@ -17,7 +17,7 @@ import Link from "next/link";
 const Navbar = () => {
 
    
-const {user,isLoading} = useUser()
+const {user} = useUser()
    
 
 
