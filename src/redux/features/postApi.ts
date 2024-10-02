@@ -27,8 +27,17 @@ const postApi = baseApi.injectEndpoints({
             }),
             invalidatesTags:['post']
           }),
+
+          addVote: builder.mutation({
+            query: (payload) => ({
+              url: `/post/vote/${payload.id}`,
+              method: "POST",
+              body: payload.voteData,
+            }),
+            invalidatesTags:['post']
+          }),
         })
     })
 
 
-    export const {useAddPostMutation,useGetPostsQuery,useGetUserPostsQuery} = postApi
+    export const {useAddPostMutation,useGetPostsQuery,useGetUserPostsQuery,useAddVoteMutation} = postApi

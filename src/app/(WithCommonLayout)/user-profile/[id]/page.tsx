@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { useUser } from '@/context/user.provider';
 import { useGetUserPostsQuery } from '@/redux/features/postApi';
@@ -10,7 +11,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import CreatePost from '@/components/User/CreatePost';
 
-const UserProfilePage = ({ params }) => {
+const UserProfilePage = ({ params }:any) => {
      const { user:currentUser } = useUser()
 
     const { data: userData } = useGetSingleUserQuery(params.id)
@@ -60,7 +61,7 @@ const UserProfilePage = ({ params }) => {
             <div className="bg-white shadow-lg mx-auto rounded-lg p-6 max-w-5xl">
                 <h2 className="text-2xl font-bold mb-4">Posts</h2>
                 {userPost?.data.map((post:any) => (
-                    <div key={post.id} className="mb-4 border-b pb-4">
+                    <div key={post._id} className="mb-4 border-b pb-4">
                         <PostCard post={post} />
                     </div>
                 ))}
