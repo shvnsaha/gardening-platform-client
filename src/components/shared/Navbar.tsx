@@ -3,29 +3,19 @@
 import { useUser } from "@/context/user.provider";
 import Link from "next/link";
 
-
-
-
-
-
-
-
-
-
-
-
 const Navbar = () => {
 
    
 const {user} = useUser()
+console.log(user);
+
    
-
-
     const navItems = <>
         <li className='font-bold'><Link href={'/'}>Home</Link></li>
-        <li className='font-bold'><Link href={'/login'}>Login</Link></li>
+        <li className='font-bold'><Link href={`/user-profile/${user?._id}`}>Profile</Link></li>
         <li className='font-bold'><Link href={'/'}>Home</Link></li>
         <li className='font-bold'><Link href={'/'}>Home</Link></li>
+
         
     </>
 
@@ -53,7 +43,6 @@ const {user} = useUser()
 
                 <div className="navbar-center hidden lg:flex ">
                         <ul className="menu menu-horizontal px-1 gap-2">
-
                             {navItems}
                         </ul>
                     </div>

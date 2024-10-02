@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/providers/Provider";
+import ReduxProvider from "@/providers/ReduxProvider";
 
 
 
@@ -15,15 +16,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-       data-theme="cupcake"
-       className="max-w-[2520px] px-1 mx-auto bg-gray-100"
-      >
-        <Providers>
-          {children}
-        </Providers>
-      </body>
-    </html>
+    <ReduxProvider>
+      <html lang="en">
+        <body
+          data-theme="cupcake"
+          className="max-w-[2520px] px-1 mx-auto bg-gray-100"
+        >
+          <Providers>
+            {children}
+          </Providers>
+        </body>
+      </html>
+    </ReduxProvider>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 "use server"
 
@@ -30,13 +31,10 @@ export const loginUser = async (userData:any) => {
       decodedToken = await jwtDecode(accessToken);
   
       return {
-        // _id: decodedToken._id,
-        // name: decodedToken.name,
+        _id: decodedToken._id,
         email: decodedToken.email,
-        // mobileNumber: decodedToken.mobileNumber,
         role: decodedToken.role,
-        // status: decodedToken.status,
-        // profilePhoto: decodedToken.profilePhoto,
+        
       };
     }
   
