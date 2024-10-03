@@ -1,6 +1,7 @@
 import { useUser } from "@/context/user.provider";
 import { useAddVoteMutation } from "@/redux/features/postApi";
 import Image from "next/image";
+import { useState } from "react";
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -9,9 +10,14 @@ import { RiShareForwardLine } from "react-icons/ri";
 const PostCard = ({ post }: any) => {
     const { user:currentUser } = useUser()
     const [addVote] = useAddVoteMutation()
+   
 
     const voteCount = post?.upVotes - post?.downVotes;
     const comment = post?.comments.length
+    const upvoteIcon = post?.upvotedBy.includes(currentUser?._id)
+    const downvoteIcon = post?.downvotedBy.includes(currentUser?._id)
+    
+      
 
 
     const handleVote = async(vote:string)=>{
@@ -20,11 +26,14 @@ const PostCard = ({ post }: any) => {
             userId: currentUser?._id
         }
         try {
-           const res = await addVote({id:post?._id,voteData}) 
+           const res = await addVote({id:post?._id,voteData}).unwrap()
+          
         } catch (error) {
             
         }
     }
+
+   
 
     return (
         <div>
@@ -45,9 +54,9 @@ const PostCard = ({ post }: any) => {
 
             <div className="flex items-center gap-8">
                 <div className="flex items-center gap-2">
-                    <BiUpvote onClick={()=>handleVote('upvote')} className="cursor-pointer" />
+                    <BiUpvote onClick={()=>handleVote('upvote')} className={`cursor-pointer ${upvoteIcon ? 'text-blue-700' : ''}`}/>
                     <p>{voteCount}</p>
-                    <BiDownvote onClick={()=>handleVote('downvote')} className="cursor-pointer" />
+                    <BiDownvote onClick={()=>handleVote('downvote')} className={`cursor-pointer ${downvoteIcon ? 'text-blue-700' : ''}`} />
                 </div>
                 <div className="flex items-center gap-2">
                     <FaRegCommentAlt />
