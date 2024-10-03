@@ -5,35 +5,37 @@ import { useState } from "react";
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import CommentDialog from "../User/CommentDialog";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PostCard = ({ post }: any) => {
-    const { user:currentUser } = useUser()
+    const { user: currentUser } = useUser()
     const [addVote] = useAddVoteMutation()
-   
+
 
     const voteCount = post?.upVotes - post?.downVotes;
     const comment = post?.comments.length
     const upvoteIcon = post?.upvotedBy.includes(currentUser?._id)
     const downvoteIcon = post?.downvotedBy.includes(currentUser?._id)
-    
-      
 
 
-    const handleVote = async(vote:string)=>{
+
+
+    const handleVote = async (vote: string) => {
         const voteData = {
             voteType: vote,
             userId: currentUser?._id
         }
         try {
-           const res = await addVote({id:post?._id,voteData}).unwrap()
-          
+            const res = await addVote({ id: post?._id, voteData }).unwrap()
+
         } catch (error) {
-            
+
         }
     }
 
-   
+
 
     return (
         <div>
@@ -54,13 +56,25 @@ const PostCard = ({ post }: any) => {
 
             <div className="flex items-center gap-8">
                 <div className="flex items-center gap-2">
-                    <BiUpvote onClick={()=>handleVote('upvote')} className={`cursor-pointer ${upvoteIcon ? 'text-blue-700' : ''}`}/>
+                    <BiUpvote onClick={() => handleVote('upvote')} className={`cursor-pointer ${upvoteIcon ? 'text-blue-700' : ''}`} />
                     <p>{voteCount}</p>
-                    <BiDownvote onClick={()=>handleVote('downvote')} className={`cursor-pointer ${downvoteIcon ? 'text-blue-700' : ''}`} />
+                    <BiDownvote onClick={() => handleVote('downvote')} className={`cursor-pointer ${downvoteIcon ? 'text-blue-700' : ''}`} />
                 </div>
                 <div className="flex items-center gap-2">
-                    <FaRegCommentAlt />
-                    <p>{comment}</p>
+
+
+                    <Dialog >
+                        <DialogTrigger asChild>
+                            {/* <Button variant="outline">Share</Button> */}
+                            <div className="flex gap-2 items-center">
+                                <FaRegCommentAlt />
+                                <p>{comment}</p>
+                            </div>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-5xl p-0 flex flex-col">
+                            <CommentDialog postData={post}></CommentDialog>
+                        </DialogContent>
+                    </Dialog>
                 </div>
 
                 <div className="flex items-center gap-2">
