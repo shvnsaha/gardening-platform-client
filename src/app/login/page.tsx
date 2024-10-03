@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-
-
 import { loginUser } from "@/services/AuthServices";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -27,18 +25,20 @@ const Login = () => {
 
         try {
             setLoader(true)
-            const response: any = await loginUser(userInfo)
+            const response = await loginUser(userInfo)
             console.log(response);
-            if (response?.success === true) {
-                toast.success(response?.data?.message);
+            if (response?.success) {
+                toast.success(response?.message);
                 router.push("/");
             } else {
                 toast.error(
-                    response?.data?.message || "Signup failed. Please try again."
+                    response?.message || "Login failed! Please Try again"
                 );
             }
         } catch (error) {
             console.log(error);
+        }finally{
+            setLoader(false)
         }
     }
     return (
@@ -103,7 +103,6 @@ const Login = () => {
                             </button>
                         </div>
                     </form>
-
 
                     <p className="px-6 text-sm text-center text-gray-400">
                         Don&apos;t have an account yet?{" "}
