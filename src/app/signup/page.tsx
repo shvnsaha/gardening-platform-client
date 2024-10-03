@@ -28,19 +28,19 @@ const Signup = () => {
         const image_url = await imageUpload(image)
 
         const userData = {
-            name, email, password, role: "user", profileImg: image_url?.data?.display_url
+            name, email, password,profileImg: image_url?.data?.display_url
         }
 
         try {
             setLoader(true)
             const response = await signup(userData).unwrap();
-            console.log(response);
-            if (response.success) {
+            
+            if (response?.success) {
                 toast.success(response.message)
                 router.push('/login')
             }
-        } catch (error) {
-            console.log(error);
+        } catch (error:any) {
+            toast.error(error?.data?.message)
         } finally {
             setLoader(false)
         }
@@ -48,7 +48,6 @@ const Signup = () => {
 
     return (
         <>
-
             <div className="flex justify-center items-center min-h-screen">
                 <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
                     <div className="mb-8 text-center">
@@ -107,10 +106,10 @@ const Signup = () => {
 
                                 </div>
                             </div>
-
-                            <div className=" p-4 bg-white w-full  m-auto rounded-lg">
+                            
+                            <div className=" p-4 bg-white w-full m-auto rounded-lg">
                                 <div className="file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg">
-                                    <div className="flex flex-col w-max mx-auto text-center">
+                                    <div className="flex flex-col  mx-auto text-center">
                                         <label>
                                             <input onChange={(e: any) => handleImageChange(e.target.files[0])}
                                                 className="text-sm cursor-pointer w-36 hidden"
@@ -127,9 +126,6 @@ const Signup = () => {
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
 
                         <div>

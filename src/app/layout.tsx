@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/providers/Provider";
 import ReduxProvider from "@/providers/ReduxProvider";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         >
           <Providers>
             {children}
+            <Toaster   position="bottom-center"/>
           </Providers>
         </body>
       </html>
