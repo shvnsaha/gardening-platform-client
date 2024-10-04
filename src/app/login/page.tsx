@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import { loginUser } from "@/services/AuthServices";
+import { useLoginMutation } from "@/redux/features/authApi";
+import { setUser, TUser } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hook";
+// import { loginUser } from "@/services/AuthServices";
+import { verifyToken } from "@/types/verifyToken";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,6 +15,8 @@ import { TbFidgetSpinner } from "react-icons/tb";
 
 const Login = () => {
 
+    const [login] = useLoginMutation()
+    const dispatch = useAppDispatch ()
     const router = useRouter()
     const [loader, setLoader] = useState(false)
     const handleSubmit = async (event: any) => {
@@ -25,21 +31,20 @@ const Login = () => {
 
         try {
             setLoader(true)
-            const response = await loginUser(userInfo)
-            console.log(response);
-            if (response?.success) {
-                toast.success(response?.message);
-                router.push("/");
-            } else {
-                toast.error(
-                    response?.message || "Login failed! Please Try again"
-                );
-            }
-        } catch (error) {
+           const res = await login(userInfo).unwrap()
+           console.log(res);
+           const user = verifyToken(res.token) as TUser
+           dispatch(setUser({user:user,token: res.token,userData: res.data}))
+        
+          router.push("/")
+          toast.success('Login successful')
+           } catch (error:any) {
+            // toas.error(error.message,{id: toastId})
+            toast.error(error?.data?.message)
             console.log(error);
-        }finally{
+           }finally{
             setLoader(false)
-        }
+           }
     }
     return (
         <>

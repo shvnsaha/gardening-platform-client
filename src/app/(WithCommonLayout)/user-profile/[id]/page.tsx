@@ -2,7 +2,6 @@
 "use client"
 import cover from "../../../../assets/cover.jpg"
 import avatar from "../../../../assets/avatar.jpg"
-import { useUser } from '@/context/user.provider';
 import { useGetUserPostsQuery } from '@/redux/features/postApi';
 import { useGetSingleUserQuery } from '@/redux/features/userApi';
 import Image from 'next/image';
@@ -10,15 +9,17 @@ import PostCard from '@/components/shared/PostCard';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import CreatePost from '@/components/User/CreatePost';
-import { MdOutlinePostAdd } from "react-icons/md";
+import { useAppSelector } from "@/redux/hook";
+import { useCurrentUserData } from "@/redux/features/authSlice";
+
 
 const UserProfilePage = ({ params }: any) => {
-    const { user: currentUser } = useUser()
-    console.log(params.id);
+   
+    const userData = useAppSelector(useCurrentUserData)
 
-    const { data: userData } = useGetSingleUserQuery(params.id)
+    const { data: selectedUser } = useGetSingleUserQuery(params.id)
     const { data: userPost } = useGetUserPostsQuery(params.id)
-    const user = userData?.data;
+    const user = selectedUser?.data;
 
     return (
         <div className="container mx-auto p-6">
@@ -35,35 +36,35 @@ const UserProfilePage = ({ params }: any) => {
                 <h2 className="text-3xl font-bold text-center">{user?.name}</h2>
                 <div className="flex justify-center mt-4">
                     <div className="mr-6 text-center">
-                        <h3 className="text-xl font-semibold">{userData?.data?.followers.length}</h3>
+                        <h3 className="text-xl font-semibold">{selectedUser?.data?.followers.length}</h3>
                         <p className="text-gray-500">Followers</p>
                     </div>
                     <div className="text-center">
-                        <h3 className="text-xl font-semibold">{userData?.data?.followers.length}</h3>
+                        <h3 className="text-xl font-semibold">{selectedUser?.data?.followers.length}</h3>
                         <p className="text-gray-500">Following</p>
                     </div>
                 </div>
                 <div className="flex justify-center gap-2">
                     <div>
                         {
-                            currentUser?._id === user?._id && <Dialog >
+                            userData?._id === user?._id && <Dialog >
                                 <DialogTrigger asChild>
                                 <Button variant="outline">Add Post</Button>
                                 </DialogTrigger>
                                 <DialogContent className="max-w-5xl p-0 flex flex-col">
-                                    <CreatePost curretUser={currentUser} />
+                                    <CreatePost curretUser={userData} />
                                 </DialogContent>
                             </Dialog>
                         }
                     </div>
                     <div>
                         {
-                            currentUser?._id === user?._id && <Dialog >
+                            userData?._id === user?._id && <Dialog >
                                 <DialogTrigger asChild>
                                     <Button variant="outline">Add Post</Button>
                                 </DialogTrigger>
                                 <DialogContent className="max-w-5xl p-0 flex flex-col">
-                                    <CreatePost curretUser={currentUser} />
+                                    <CreatePost curretUser={userData} />
                                 </DialogContent>
                             </Dialog>
                         }
